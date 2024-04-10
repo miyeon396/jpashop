@@ -1,0 +1,19 @@
+spring:
+#  datasource:
+#    url: jdbc:h2:mem:test
+#    username: sa
+#    password:
+#    driver-class-name: org.h2.Driver
+#
+#  jpa:
+#    hibernate:
+#        ddl-auto: create-drop #test는 create-drop이 보통 종료시점에 종료해서 완전히 초기화!
+#    properties:
+#      hibernate:
+#        show_sql: true #sout
+#        format_sql: true
+
+logging:
+  level:
+    org.hibernate.SQL: debug #logger
+    org.hibernate.type: trace

@@ -5,7 +5,7 @@ import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class MemberRepository {
+public class MemberRepositoryBk {
 
     @PersistenceContext //spring boot가 이 어노테이션 있으면 EntityManager 주입해줌
     private EntityManager em;
