@@ -10,13 +10,13 @@ public class MemberRepository {
     @PersistenceContext //spring boot가 이 어노테이션 있으면 EntityManager 주입해줌
     private EntityManager em;
 
-    public Long save(Member member) {
+    public Long save(MemberBk member) {
         em.persist(member);
         return member.getId();
     }
 
-    public Member find(Long id) {
-        return em.find(Member.class, id);
+    public MemberBk find(Long id) {
+        return em.find(MemberBk.class, id);
     }
 
 }
