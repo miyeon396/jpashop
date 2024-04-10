@@ -38,6 +38,7 @@ public class OrderServiceTest {
         Member member = createMember();
 
         Book book = createBook("시골 JPA", 10000, 10);
+        em.persist(book);
 
         int orderCount = 2;
 
@@ -59,6 +60,7 @@ public class OrderServiceTest {
         //given
         Member member = createMember();
         Item item = createBook("시골 JPA", 10000, 10);
+        em.persist(item);
 
         int orderCount = 11;
         //when
@@ -75,6 +77,7 @@ public class OrderServiceTest {
         //given
         Member member = createMember();
         Book item = createBook("시골 JPA", 10000, 10);
+        em.persist(item);
 
         int orderCount = 2;
         Long orderId = orderService.order(member.getId(), item.getId(), orderCount);
