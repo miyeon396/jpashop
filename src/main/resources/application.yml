@@ -11,8 +11,8 @@ spring:
 #    show_sql: true #sout
     properties:
       hibernate:
-        show_sql: true #sout
         format_sql: true
+        default_batch_fetch_size: 100
 
 logging:
   level:

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.aspectj.weaver.ast.Or;
+import org.hibernate.annotations.BatchSize;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class Order {
     //주인은 그냥 냅두면됨.
     private Member member;
 
+    @BatchSize(size = 10) //요런 방법도 있음.
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
