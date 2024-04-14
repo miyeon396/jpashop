@@ -1,5 +1,6 @@
 package jpabook.jpashop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
@@ -24,5 +25,6 @@ public class Member {
     @OneToMany(mappedBy = "member") //order table에 있는 member필드레 의해서 매핑된거야
     //반대로 나는 주인이 아니에요. 나는 거울이에요
     //읽기 전용. 나는 저거에 의해서 매핑된거일 뿐이야
+    @JsonIgnore
     private List<Order> orders = new ArrayList<>();
 }
