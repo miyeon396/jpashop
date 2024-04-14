@@ -1,12 +1,16 @@
 package jpabook.jpashop.api;
 
+import jpabook.jpashop.domain.Address;
 import jpabook.jpashop.domain.Order;
+import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.repository.OrderRepository;
 import jpabook.jpashop.repository.OrderSearch;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -32,6 +36,50 @@ public class OrderSimpleApiController {
             // 하지만 근본은 엔티티 미노출!
         }
         return all;
+    }
+
+    @GetMapping("/api/v2/simple-orders")
+    public List<SimpleOrderDto> ordersV2() { //list반환하면 안되고 result로 한번 감싸야합니다.
+        List<Order> orders = orderRepository.findAllByCriteria(new OrderSearch());
+        List<SimpleOrderDto> list = orders.stream()
+                .map(o -> new SimpleOrderDto(o)) //map은 a를 b로 바꾸는 것.
+                .toList();
+
+        return list;
+
+        //1. ORDER -> SQL 1번 -> 결과 주문수 2개
+        // 루프 2바퀴
+        // 첫바퀴 멤버 쿼리, 딜리버리 쿼리
+        // 2바퀴 멤버 쿼리, 딜리버리 쿼리
+        // -> 총 5번의 쿼리 -> N+1의 이슈 이것이
+    }
+
+    @GetMapping("/api/v3/simple-orders")
+    public List<SimpleOrderDto> ordersV3() {
+        List<Order> orders = orderRepository.findAllWithMemberDelivery();
+        List<SimpleOrderDto> result = orders.stream()
+                .map(o -> new SimpleOrderDto(o))
+                .toList();
+
+        return result;
+    }
+
+
+    @Data
+    static class SimpleOrderDto {
+        private Long orderId;
+        private String name;
+        private LocalDateTime orderDate;
+        private OrderStatus orderStatus;
+        private Address address;
+
+        public SimpleOrderDto(Order order) {
+            this.orderId = order.getId();
+            this.name = order.getMember().getName(); //LAZY 초기화. 영속성에서 가져오는데 없다면 디비 쿼리 날림
+            this.orderDate = order.getOrderDate();
+            this.orderStatus = order.getStatus();
+            this.address = order.getDelivery().getAddress(); //LAZY 초기화
+        }
     }
 
 }
