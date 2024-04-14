@@ -8,6 +8,7 @@ spring:
   jpa:
     hibernate:
         ddl-auto: create #none
+#    show_sql: true #sout
     properties:
       hibernate:
         show_sql: true #sout
@@ -16,4 +17,5 @@ spring:
 logging:
   level:
     org.hibernate.SQL: debug #logger
-    org.hibernate.type: trace
+#    org.hibernate.type: trace
+    p6spy: info
