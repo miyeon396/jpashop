@@ -113,6 +113,16 @@ public class OrderRepository {
         ).getResultList();
     }
 
+    public List<Order> findAllWithItem() {
+        return em.createQuery(
+                "select distinct o from Order o " +
+                        " join fetch o.member m " +
+                        " join fetch o.delivery d " +
+                        " join fetch  o.orderItems oi " +
+                        " join fetch oi.item i ", Order.class)
+                .getResultList();
+    }
+
 
     //예제는 엄찌만 QueryDsl이 대안~ 실무에서는 QueryDsl 사용하세여 깔끔
 
